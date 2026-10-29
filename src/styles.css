@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #f3eee6;
+  --color-paper-deep: #e5ddd0;
+  --color-ink: #1c1714;
+  --color-muted: #5c554c;
+  --color-rule: #d2c8ba;
+  --color-mist: #d9cfc3;
+  --color-cinnabar: #b43324;
+  --color-cinnabar-deep: #8c2418;
+
+  --font-sans: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
+  --font-display: "Fraunces", "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+
+  --tracking-kicker: 0.18em;
+  --tracking-display: -0.045em;
+  --leading-body: 1.55;
+
+  --aspect-plate: 3 / 2;
+  --aspect-portrait: 3 / 4;
+  --aspect-opener: 16 / 9;
+
+  --text-display: clamp(3.5rem, 17vw, 9.5rem);
+  --text-display--line-height: 0.82;
+  --text-display--letter-spacing: -0.045em;
+  --text-display--font-weight: 600;
+
+  --text-section: clamp(2.35rem, 4.6vw, 3.6rem);
+  --text-section--line-height: 0.95;
+  --text-section--letter-spacing: -0.03em;
+  --text-section--font-weight: 600;
+
+  --text-watermark: clamp(7rem, 26vw, 16rem);
+  --text-watermark--line-height: 0.78;
+  --text-watermark--font-weight: 600;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: var(--leading-body);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+
+  ::selection {
+    background: var(--color-cinnabar);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-cinnabar);
+    outline-offset: 3px;
+  }
+
+  section[id],
+  article[id] {
+    scroll-margin-top: 5.25rem;
+  }
+}
+
+.sheet {
+  width: 100%;
+  max-width: 76rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .sheet {
+    padding-inline: 2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .sheet {
+    padding-inline: 3.5rem;
+  }
+}
+
+.press {
+  transition: scale 150ms ease-out;
+}
+
+.press:active:not(:disabled) {
+  scale: 0.96;
+}
+
+.spine {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.menu-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.menu-panel[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+@media (min-width: 768px) {
+  .menu-panel {
+    display: none;
+  }
+}
+
+.choice:focus-within {
+  outline: 2px solid var(--color-cinnabar);
+  outline-offset: 3px;
+}
+
+.work-photo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1);
+  transition: transform 520ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.work-reveal {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: color-mix(in srgb, var(--color-paper) 94%, transparent);
+  color: var(--color-ink);
+  transform: translateY(100%);
+  transition: transform 280ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work-dek {
+    display: none;
+  }
+
+  .group:hover .work-reveal,
+  .group:focus-within .work-reveal {
+    transform: translateY(0);
+  }
+
+  .group:hover .work-photo,
+  .group:focus-within .work-photo {
+    transform: scale(1.045);
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .work-reveal {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .work-dek {
+    display: block;
+  }
+
+  .work-reveal {
+    display: none;
+  }
+}
+
+.force-dek .work-dek {
+  display: block;
+}
+
+.drop::first-letter {
+  float: left;
+  margin: 0.06em 0.08em 0 0;
+  font-family: var(--font-display);
+  font-size: 4.4rem;
+  font-weight: 600;
+  line-height: 0.78;
+  color: var(--color-cinnabar);
+}
+
+.endpaper {
+  overflow: hidden;
+  border-top: 1px solid var(--color-ink);
+}
+
+.endpaper p {
+  margin: 0;
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: clamp(4.75rem, 18.5vw, 15.5rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.76;
+  transform: translateY(0.12em);
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .work-photo,
+  .work-reveal,
+  .press,
+  .menu-panel {
+    transition: none !important;
+  }
+}
